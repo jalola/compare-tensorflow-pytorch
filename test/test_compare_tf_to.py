@@ -40,7 +40,7 @@ def tf_to_gen_input(*arg):
     lib.delete_all_params()
     same_input = gen_input(arr)
     tf_input = tf.convert_to_tensor(same_input, np.float32) 
-    to_input = autograd.Variable(torch.from_numpy(same_input).type(torch.FloatTensor), requires_grad=True) 
+    to_input = torch.from_numpy(same_input).type(torch.FloatTensor).requires_grad_(True)
     return (tf_input, to_input)
 
 ERROR_THRESHOLD = 1.5e-4 #Around 1 degree difference, 1 - cosine(degree/180 * pi) 
@@ -240,7 +240,8 @@ tf_input, to_input = tf_to_gen_input(68, 3, 64, 64)
 tf_output = Normalize('Discriminator', [0, 2, 3], tf_input)
 tf_global_init()
 tf_cost = tf.reduce_mean(tf.square(tf_output))
-to_LN = gan.LayerNorm(3) # n_features
+#to_LN = gan.LayerNorm(3) # n_features
+to_LN = nn.LayerNorm([3, 64, 64])
 to_output = to_LN(to_input)
 to_cost = torch.mean(to_output**2)
 compare('LayerNorm-Forward', tf_output, to_output)
