@@ -5,7 +5,7 @@ This is our testing module for the implementation of [improved WGAN in Pytorch](
 
 # Prerequisites
 * Python >= 3.6
-* Pytorch [Latest version from master branch](https://github.com/pytorch/pytorch)
+* [Pytorch v0.4.0](https://github.com/pytorch/pytorch)
 * Numpy
 * SciPy
 * TensorFlow
